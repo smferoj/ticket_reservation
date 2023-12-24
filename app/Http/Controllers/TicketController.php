@@ -33,14 +33,50 @@ class TicketController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Ticket created successfully!');
-        // DB::table('tickets')->insert([
-        //     'summary' => $request->summary,
-        //     'description' => $request->description,
-        //     'status' => $request->status,
-        // ]);
 
     }
+
+    //  showing ticket for edit
+
+    public function showTicket(Ticket $ticket){
+
+        return view('tickets.show', compact('ticket'));
+    }
+
+    // update ticket 
+    public function update(Request $request, Ticket $ticket)
+{
+    $ticket->summary = $request-> summary;
+    $ticket->description = $request-> description;
+    $ticket->status = $request-> status;
+    $ticket->save();
+    return redirect()->route('tickets.index');
 }
+
+    public function delete(Ticket $ticket)
+{
+    return view('tickets.delete',  compact('ticket'));
+}
+
+
+    public function destroy(Ticket $ticket)
+{
+    $ticket->delete(); 
+    return redirect()->route('tickets.index');
+}
+
+    
+
+
+
+        
+    }
+
+
+
+
+
+
 
 
 
